@@ -86,7 +86,6 @@ public class BWorld {
 	public void removeEntity(String name, final Player player, JavaPlugin plugin) {
 		server.getServer().getScheduler()
 				.callSyncMethod(plugin, new Callable<Object>() {
-					@Override
 					public Object call() throws Exception {
 						Location loc = player.getLocation();
 						CraftWorld craftWorld = (CraftWorld) player.getWorld();
