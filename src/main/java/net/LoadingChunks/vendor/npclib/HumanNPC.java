@@ -2,6 +2,9 @@ package net.LoadingChunks.vendor.npclib;
 
 //import java.util.Arrays;
 
+import java.lang.reflect.Field;
+
+import net.minecraft.server.v1_6_R2.EntityHuman;
 import net.minecraft.server.v1_6_R2.EntityPlayer;
 import net.minecraft.server.v1_6_R2.Packet18ArmAnimation;
 import net.minecraft.server.v1_6_R2.Packet5EntityEquipment;
@@ -41,9 +44,16 @@ public class HumanNPC extends NPC {
 				.setItemInHand(new ItemStack(m, 1, damage));
 	}
 	//name is a protcted final String in EntityHuman.java ; not sure if rename is still possible
-	//public void setName(String name) {
-	//	((NPCEntity) getEntity()).name = name;
-	//}
+	// You can, but it's hacky. - Ben
+	public void setName(String name) {
+		try {
+			Field nameField = EntityHuman.class.getDeclaredField("name");
+			nameField.setAccessible(true);
+			nameField.set(this, name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public String getName() {
 		return ((NPCEntity) getEntity()).getName();
